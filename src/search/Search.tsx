@@ -1,5 +1,5 @@
 import Kendra, { QueryRequest } from "aws-sdk/clients/kendra";
-import { AWSError } from "aws-sdk/global";
+import { AWSError } from "aws-sdk";
 import { PromiseResult } from "aws-sdk/lib/request";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { ChangeEvent } from "react";
@@ -130,7 +130,7 @@ export default class Search extends React.Component<SearchProps, SearchState> {
           dataSourceNameLookup: getDataSourceNameLookup(dataSources),
           suggestionsEnabled: (qsConfig && qsConfig.Mode === QuerySuggestionsMode.ENABLED) ? true : false,
         });
-      } catch (e) {
+      } catch (e: any) {
         this.setState({
           error: e,
         });
@@ -172,7 +172,7 @@ export default class Search extends React.Component<SearchProps, SearchState> {
       }
 
       return dataSources;
-    } catch (e) {
+    } catch (e: any) {
       this.setState({
         error: e,
       });
@@ -210,7 +210,7 @@ export default class Search extends React.Component<SearchProps, SearchState> {
     if (this.props.kendra) {
       try {
         results = await this.props.kendra.query(queryRequest).promise();
-      } catch (e) {
+      } catch (e: any) {
         this.setState({
           searchResults: {},
           topResults: [],

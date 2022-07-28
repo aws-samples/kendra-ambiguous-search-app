@@ -1,6 +1,6 @@
 import Kendra from "aws-sdk/clients/kendra";
 import _ from "lodash";
-import { Range } from "rc-slider";
+import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import React from "react";
 import { DateRange } from "../SelectedFacetRetriever";
@@ -267,13 +267,18 @@ export class DateFacet extends React.Component<Props, State> {
               displaySelectionRange={displaySelectionRange}
             />
           </div>
-          <Range
+          <Slider
+            range
             allowCross={false}
             pushable={1}
             min={fullSliderRange[0]}
             max={fullSliderRange[1]}
             value={slider.value || fullSliderRange}
-            onChange={this.handleChange}
+            onChange={(value) => {
+              if (Array.isArray(value)) {
+                this.handleChange([value[1], value[0]])
+              }
+            }}
             onAfterChange={this.applyChangedRangeFilter}
             disabled={disableAdd && !active}
           />
