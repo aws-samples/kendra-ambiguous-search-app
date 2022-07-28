@@ -79,6 +79,10 @@ interface SearchState {
 
   // ambiguous search flag
   isAmbiguous: boolean
+
+  // statistical information
+  dulation: string, // dulation to search
+  executedQuery: string // executed query which can be typed query and ambiguous query
 }
 
 export default class Search extends React.Component<SearchProps, SearchState> {
@@ -110,7 +114,11 @@ export default class Search extends React.Component<SearchProps, SearchState> {
       language: DEFAULT_LANGUAGE,
 
       // ambiguous search flag
-      isAmbiguous: false
+      isAmbiguous: false,
+
+      // statistical information
+      dulation: "", // dulation to search
+      executedQuery: "" // executed query which can be typed query and ambiguous query
     };
   }
 
@@ -255,6 +263,10 @@ export default class Search extends React.Component<SearchProps, SearchState> {
   ) => {
     this.setState({ dataReady: false });
 
+
+    // start measurement
+    const start = performance.now();
+
     // set language code of datasources
     if (isNullOrUndefined(filter)) {
       filter = {
@@ -320,6 +332,16 @@ export default class Search extends React.Component<SearchProps, SearchState> {
         "WARNING: No Kendra SDK instance provided, using dummy data"
       );
     }
+
+    // stop measurement
+    const end = performance.now();
+    // dulation
+    const elapsed = (end - start) / 1000;
+    const elapsedStr = elapsed.toPrecision(3);
+    // show dulation
+    this.setState({ dulation: elapsedStr})
+    // show executed query
+    this.setState({ executedQuery: ambiguousQuery ? ambiguousQuery : queryText })
 
     const tempTopResults: Kendra.QueryResultItemList = [];
     const tempFAQResults: Kendra.QueryResultItemList = [];
@@ -632,6 +654,8 @@ export default class Search extends React.Component<SearchProps, SearchState> {
                     selectedSortingAttribute={
                       this.state.selectedSortingAttribute
                     }
+                    dulation={this.state.dulation}
+                    executedQuery={this.state.executedQuery}
                     onSortingAttributeChange={this.onSortingAttributeChange}
                     onSortingOrderChange={this.onSortingOrderChange}
                   />

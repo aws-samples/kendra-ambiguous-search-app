@@ -21,6 +21,8 @@ interface ResultsPanelProps {
   currentPageNumber: number;
   availableSortingAttributes: AvailableSortingAttributesManager;
   selectedSortingAttribute: SelectedSortingAttributeManager;
+  dulation: string, // dulation to search
+  executedQuery: string, // executed query which can be typed query and ambiguous query
   onSortingAttributeChange: (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => void;
@@ -38,8 +40,8 @@ export default class ResultsPanel extends React.Component<
   ResultsPanelProps,
   {}
 > {
-  private renderPageIndex = () => {
-    const { currentPageNumber, dataReady, results } = this.props;
+  private renderStatisticalInformation = () => {
+    const { currentPageNumber, dataReady, results, dulation, executedQuery } = this.props;
 
     // Ensure spacing is always correct
     let pageIndex = <span>&nbsp;</span>;
@@ -80,7 +82,11 @@ export default class ResultsPanel extends React.Component<
       }
     }
 
-    return <div>{pageIndex}</div>;
+    return <div>
+      <div>{pageIndex}</div>
+      <div><span>Duration: {dulation}s</span></div>
+      <div><span>Executed Query: {executedQuery}</span></div>
+    </div>;
   };
 
   render() {
@@ -95,7 +101,7 @@ export default class ResultsPanel extends React.Component<
     if (dataReady) {
       return (
         <div className="results-section">
-          <div className="results-number">{this.renderPageIndex()}</div>
+          <div className="results-number">{this.renderStatisticalInformation()}</div>
 
           <TopResults results={topResults} submitFeedback={submitFeedback} />
           <FAQResults results={faqResults} submitFeedback={submitFeedback} />
