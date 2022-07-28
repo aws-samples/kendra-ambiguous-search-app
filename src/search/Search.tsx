@@ -27,6 +27,7 @@ import { DEFAULT_SORT_ATTRIBUTE, SortOrderEnum } from "./sorting/constants";
 import S3 from "aws-sdk/clients/s3";
 import { isNullOrUndefined } from "./utils";
 import LanguageOption from "./languageOption/LanguageOption";
+import AmbiguousOption from "./ambiguousOption/AmbiguousOption";
 import { DEFAULT_LANGUAGE } from "./constants";
 
 interface SearchProps {
@@ -70,6 +71,9 @@ interface SearchState {
 
   // datasources language
   language: string;
+
+  // ambiguous search flag
+  isAmbiguous: boolean
 }
 
 export default class Search extends React.Component<SearchProps, SearchState> {
@@ -99,6 +103,9 @@ export default class Search extends React.Component<SearchProps, SearchState> {
       
       // datasource language
       language: DEFAULT_LANGUAGE,
+
+      // ambiguous search flag
+      isAmbiguous: false
     };
   }
 
@@ -524,6 +531,12 @@ export default class Search extends React.Component<SearchProps, SearchState> {
               language: event.target.value
             })
           }} />
+
+        <AmbiguousOption onAmbiguousChange={(e) => {
+          this.setState((value) => {
+            return { isAmbiguous: !value.isAmbiguous }
+          })
+        }}/>
 
         {this.state.queryText && this.state.dataReady && (
           <div className="search-container">
