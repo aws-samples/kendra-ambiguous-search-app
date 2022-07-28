@@ -2,7 +2,7 @@ import React from "react";
 import LocalCredentialsBanner from "./services/helpers/LocalCredentialsBanner";
 import MockDataWarning from "./services/helpers/MockDataWarning";
 import Search from "./search/Search";
-import { kendra, indexId, errors, s3 } from "./services/Kendra";
+import { kendra, indexId, errors, s3, dynamodb } from "./services/Kendra";
 import { facetConfiguration } from "./search/configuration";
 
 import "./App.css";
@@ -19,6 +19,7 @@ function App() {
       <Search
         kendra={kendra}
         s3={s3}
+        dynamodb={dynamodb}
         indexId={indexId}
         facetConfiguration={facetConfiguration}
       />

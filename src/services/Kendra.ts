@@ -1,6 +1,7 @@
 import Kendra from "aws-sdk/clients/kendra";
 import { CREDENTIALS_FILE_NAME, CREDENTIALS_FILE_PATH } from "./constants";
 import S3 from "aws-sdk/clients/s3";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
 const _loadingErrors = [];
 
@@ -61,3 +62,15 @@ export const s3 = !hasErrors
       region: config.region,
     })
   : undefined;
+
+export const dynamodb = !hasErrors
+  ? new DynamoDBClient({
+    region: config.region,
+    credentials: {
+      accessKeyId: config.accessKeyId,
+      secretAccessKey: config.secretAccessKey,
+    }
+  })
+  : undefined;
+
+export const tableName = config ? config.tableName : undefined;

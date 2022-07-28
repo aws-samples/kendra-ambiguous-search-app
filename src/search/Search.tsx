@@ -29,6 +29,9 @@ import { isNullOrUndefined } from "./utils";
 import LanguageOption from "./languageOption/LanguageOption";
 import AmbiguousOption from "./ambiguousOption/AmbiguousOption";
 import { DEFAULT_LANGUAGE } from "./constants";
+import { dynamodb, tableName } from "../services/Kendra";
+import { DynamoDBClient, QueryCommandInput as DynamoQueryCommandInput } from "@aws-sdk/client-dynamodb";
+import { QueryCommand as DynamoQueryCommand } from "@aws-sdk/client-dynamodb";
 
 interface SearchProps {
   /* An authenticated instance of the Kendra SDK */
@@ -37,6 +40,8 @@ interface SearchProps {
   indexId: string;
 
   s3?: S3;
+
+  dynamodb?: DynamoDBClient;
 
   facetConfiguration?: {
     facetsToShowWhenUncollapsed: number;
@@ -196,6 +201,53 @@ export default class Search extends React.Component<SearchProps, SearchState> {
     return null;
   };
 
+  // get synonym from dynamodb
+  getSynonym = async (k: string) => {
+    const params: DynamoQueryCommandInput = {
+      TableName: tableName,
+      KeyConditionExpression: "keyword = :k",
+      ExpressionAttributeValues: {
+        ":k": { S: k }
+      }
+    }
+
+    const result = await dynamodb?.send(new DynamoQueryCommand(params))
+    return result
+  }
+
+  // get ambiguous query by using synonym
+  getAmbiguousQuery = async (queryText: string) => {
+    let ambiguousQuery = "";
+
+    // convert full-width space into half-width space
+    const query = queryText.replace('　', ' ');
+    // split query text by half-width space
+    const ql = query.split(' ');
+
+    // add OR operator into query if there are synonym
+    for (const q of ql) {
+      try {
+        const synonyms = await this.getSynonym(q);
+        let rc = synonyms?.Count ?? 0;
+        if (rc === 0) {
+          ambiguousQuery = ambiguousQuery + q
+        } else {
+          ambiguousQuery = ambiguousQuery + '(' + q + ' OR '
+          for (let i = 0; i < rc; i++) {
+            if (i < rc - 1) {
+              ambiguousQuery = ambiguousQuery + synonyms?.Items?.[0].synonym.L?.[i].S + ' OR '
+            } else {
+              ambiguousQuery = ambiguousQuery + synonyms?.Items?.[0].synonym.L?.[i].S + ') '
+            }
+          }
+        }
+      } catch (e) {
+      }
+    }
+
+    return ambiguousQuery
+  }
+
   private getResultsHelper = async (
     queryText: string,
     pageNumber: number,
@@ -224,11 +276,17 @@ export default class Search extends React.Component<SearchProps, SearchState> {
       })
     }
 
+    let ambiguousQuery = "";
+    // modify queryText to do ambiguous Search
+    if (this.state.isAmbiguous) {
+      ambiguousQuery = await this.getAmbiguousQuery(queryText)
+    }
+
     let results: Kendra.QueryResult = getSearchResults(pageNumber, filter);
 
     const queryRequest: QueryRequest = {
       IndexId: this.props.indexId,
-      QueryText: queryText,
+      QueryText: ambiguousQuery ? ambiguousQuery : queryText, // apply ambiguousQuery if exist
       PageNumber: pageNumber,
       AttributeFilter: filter ? filter : undefined,
     };
