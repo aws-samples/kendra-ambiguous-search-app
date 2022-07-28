@@ -26,6 +26,8 @@ import { SelectedSortingAttributeManager } from "./sorting/SelectedSortingAttrib
 import { DEFAULT_SORT_ATTRIBUTE, SortOrderEnum } from "./sorting/constants";
 import S3 from "aws-sdk/clients/s3";
 import { isNullOrUndefined } from "./utils";
+import LanguageOption from "./languageOption/LanguageOption";
+import { DEFAULT_LANGUAGE } from "./constants";
 
 interface SearchProps {
   /* An authenticated instance of the Kendra SDK */
@@ -65,6 +67,9 @@ interface SearchState {
   // Sorting state
   availableSortingAttributes: AvailableSortingAttributesManager;
   selectedSortingAttribute: SelectedSortingAttributeManager;
+
+  // datasources language
+  language: string;
 }
 
 export default class Search extends React.Component<SearchProps, SearchState> {
@@ -91,6 +96,9 @@ export default class Search extends React.Component<SearchProps, SearchState> {
       availableSortingAttributes: AvailableSortingAttributesManager.empty(),
       selectedSortingAttribute: SelectedSortingAttributeManager.default(),
       suggestionsEnabled: false,
+      
+      // datasource language
+      language: DEFAULT_LANGUAGE,
     };
   }
 
@@ -187,6 +195,27 @@ export default class Search extends React.Component<SearchProps, SearchState> {
     filter?: Kendra.AttributeFilter
   ) => {
     this.setState({ dataReady: false });
+
+    // set language code of datasources
+    if (isNullOrUndefined(filter)) {
+      filter = {
+        "EqualsTo": {
+          "Key": "_language_code",
+          "Value": {
+            "StringValue": this.state.language
+          }
+        }
+      };
+    } else {
+      filter?.AndAllFilters?.push({
+        EqualsTo: {
+          Key: "_language_code",
+          Value: {
+            "StringValue": this.state.language
+          }
+        }
+      })
+    }
 
     let results: Kendra.QueryResult = getSearchResults(pageNumber, filter);
 
@@ -488,6 +517,14 @@ export default class Search extends React.Component<SearchProps, SearchState> {
             suggestionsEnabled={this.state.suggestionsEnabled}
             getQuerySuggestions={this.getQuerySuggestions}
         />
+
+        <LanguageOption
+          onLanguageChange={(event) => {
+            this.setState({
+              language: event.target.value
+            })
+          }} />
+
         {this.state.queryText && this.state.dataReady && (
           <div className="search-container">
             <div className="search-facet-container">

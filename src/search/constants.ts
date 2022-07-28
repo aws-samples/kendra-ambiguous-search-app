@@ -73,3 +73,49 @@ export enum QuerySuggestionsMode {
   ENABLED = "ENABLED",
   LEARN_ONLY = "LEARN_ONLY",
 }
+
+// language setting
+export const DEFAULT_LANGUAGE:string = "en";
+
+export type langType = {
+  name: string,
+  code: string
+}
+
+export const languageType: langType[] = [
+  { name: "English", code: "en" },
+  { name: "Spanish", code: "es" },
+  { name: "French", code: "fr" },
+  { name: "German", code: "de" },
+  { name: "Portuguese", code: "pt" },
+  { name: "Japanese", code: "ja" },
+  { name: "Korean", code: "ko" },
+  { name: "Chinese", code: "zh" },
+  { name: "Italian", code: "it" },
+  { name: "Hindi", code: "hi" },
+  { name: "Arabic", code: "ar" },
+  { name: "Armenian", code: "hy" },
+  { name: "Basque", code: "eu" },
+  { name: "Bengali", code: "bn" },
+  { name: "Brazilian", code: "pt-BR" },
+  { name: "Bulgarian", code: "bg" },
+  { name: "Catalan", code: "ca" },
+  { name: "Czech", code: "cs" },
+  { name: "Danish", code: "da" },
+  { name: "Dutch", code: "nl" },
+  { name: "Finnish", code: "fi" },
+  { name: "Galician", code: "gl" },
+  { name: "Greek", code: "el" },
+  { name: "Hungarian", code: "hu" },
+  { name: "Indonesian", code: "id" },
+  { name: "Irish", code: "ga" },
+  { name: "Latvian", code: "lv" },
+  { name: "Lithuanian", code: "lt" },
+  { name: "Norwegian", code: "no" },
+  { name: "Persian", code: "fa" },
+  { name: "Romanian", code: "ro" },
+  { name: "Russian", code: "ru" },
+  { name: "Sorani", code: "ckb" },
+  { name: "Swedish", code: "sv" },
+  { name: "Turkish", code: "tr" }
+]
