@@ -5,6 +5,7 @@ Kendra Ambiguous Search App は Amazon Kendra であいまい検索を実現す�
 
 ## Architecture / 構成図
 ![architecture](synonym/architecture.png)
+![flow](synonym/flow.png)
 
 ## Preview / 動作イメージ
 ![screenshot](synonym/screenshot.png)
