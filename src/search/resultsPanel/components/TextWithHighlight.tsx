@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
 import React from "react";
 import { isNullOrUndefined, unionSortedHighlights } from "../../utils";
 import Kendra from "aws-sdk/clients/kendra";

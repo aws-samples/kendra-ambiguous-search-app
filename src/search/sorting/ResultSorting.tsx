@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
 import React from "react";
 import { DEFAULT_SORT_ATTRIBUTE, SortOrderEnum, i18n } from "./constants";
 import { AvailableSortingAttributesManager } from "./AvailableSortingAttributesManager";

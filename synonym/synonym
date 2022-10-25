@@ -1,3 +1,6 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+#
 # シノニムのサンプルテキストです
 # シャープから始まる行はコメントとして無視されます
 # 単方向シノニムは左側のトークンと右側の用語を=>の記号で区切ります

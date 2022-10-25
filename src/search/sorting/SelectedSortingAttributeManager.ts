@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
 import { SelectedSortingAttributeRetriever } from "./SelectedSortingAttributeRetriever";
 import { DEFAULT_SORT_ATTRIBUTE, SortOrderEnum } from "./constants";
 

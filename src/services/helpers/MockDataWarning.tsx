@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
 import React from "react";
 
 import { CREDENTIALS_FILE_NAME, CREDENTIALS_FILE_PATH } from "../constants";

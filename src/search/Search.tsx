@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
 import Kendra, { QueryRequest } from "aws-sdk/clients/kendra";
 import { AWSError } from "aws-sdk";
 import { PromiseResult } from "aws-sdk/lib/request";

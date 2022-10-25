@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
 export const facetConfiguration = {
   /*
    * The max number of facets to show when uncollapsed

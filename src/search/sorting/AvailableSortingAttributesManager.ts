@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
 import { DocumentMetadataConfigurationList } from "aws-sdk/clients/kendra";
 import { AvailableSortingAttributesRetriever } from "./AvailableSortingAttributesRetriever";
 import { DocumentAttributeValueTypeEnum } from "../facets/utils";

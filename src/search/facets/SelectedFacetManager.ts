@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
 import { SelectedFacetRetriever, DateRange } from "./SelectedFacetRetriever";
 import Kendra, { DocumentAttributeValueType } from "aws-sdk/clients/kendra";
 import _ from "lodash";

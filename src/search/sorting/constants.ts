@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: MIT-0
 export const DEFAULT_SORT_ATTRIBUTE = "Relevance";
 
 export enum SortOrderEnum {
