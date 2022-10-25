@@ -14,15 +14,12 @@ export default class LanguageOption extends React.Component<
     LanguageOptionProps,
     LanguageOptionState
 > {
-    constructor(props: LanguageOptionProps) {
-        super(props);
-    }
     getSortingAttributeSelectOptions = (attributeList: langType[]) => {
         return (
             <optgroup className="opt-group">
                 {
                     attributeList.map((al) => {
-                        return <option value={al.code}>{al.name}</option>
+                        return <option value={al.code} key={al.code}>{al.name}</option>
                     })
                 }
             </optgroup>

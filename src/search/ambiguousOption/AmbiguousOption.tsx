@@ -12,10 +12,6 @@ export default class AmbiguousOption extends React.Component<
     AmbiguousOptionProps,
     AmbiguousOptionState
 > {
-    constructor(props: AmbiguousOptionProps) {
-        super(props);
-    }
-
     render() {
         return <div className="ambiguous-option-container">
             <Form.Check
