@@ -1,5 +1,6 @@
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: MIT-0
+// Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: LicenseRef-.amazon.com.-AmznSL-1.0
+// Licensed under the Amazon Software License  http://aws.amazon.com/asl/
 import Kendra from "aws-sdk/clients/kendra";
 import { CREDENTIALS_FILE_NAME, CREDENTIALS_FILE_PATH } from "./constants";
 import S3 from "aws-sdk/clients/s3";
