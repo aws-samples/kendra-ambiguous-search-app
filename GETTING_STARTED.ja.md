@@ -38,6 +38,14 @@ Indexの作成には30分程度がかかります。作成の完了を待たず�
 | --- | --- |
 | バケット名 | kendra-<名前>-<年月日> |
 
+このサンプルでは触れませんが、プロダクションで S3 を使う場合は
+- セキュリティやアクセス監査のためにができるように[サーバーアクセスログ](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/ServerLogs.html)を有効化
+- [パブリックアクセス](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/access-control-block-public-access.html)のブロック
+- [S3 バケットの暗号化](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/default-bucket-encryption.html)
+- [MFA Delete](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html)によるアクセス強化
+- [Amazon Macie](https://aws.amazon.com/jp/macie/) を使った個人データ流入の検出
+を検討して下さい。
+
 ### Step3: Cloud9 環境をつくる
 - [Cluod9 のコンソール](https://us-east-1.console.aws.amazon.com/cloud9/home/product)にアクセスし、環境を作成します。
 
@@ -46,6 +54,7 @@ Indexの作成には30分程度がかかります。作成の完了を待たず�
 | TITLE | VALUE |
 | --- | --- |
 | Name | Kendra Ambiguous |
+| Environment type | Create a new no-ingress EC2 instance for environment (access via Systems Manager) |
 | Instance type | t3.small (2 GiB RAM + 2 vCPU) |
 
 環境の作成には数分かかります。作成の完了を待たずに次のステップに進みます。
@@ -136,6 +145,8 @@ Sync には時間がかかります。作成の完了を待たずに次のステ
 
 さらに`ポリシーを作成`ボタンをクリックし、`JSON`タブに下記内容をペーストします。
 
+また貼り付ける際は、`アカウント番号`と`dynamodbのテーブル名`を書き換えて下さい
+
 ```
 {
     "Version": "2012-10-17",
@@ -144,7 +155,10 @@ Sync には時間がかかります。作成の完了を待たずに次のステ
             "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": "dynamodb:Scan",
-            "Resource": "*"
+            "Resource": [
+                "arn:aws:dynamodb:us-east-1:アカウント番号:table/dynamodbのテーブル名/index/*",
+                "arn:aws:dynamodb:us-east-1:アカウント番号:table/dynamodbのテーブル名"
+            ]
         },
         {
             "Sid": "VisualEditor1",
@@ -155,7 +169,10 @@ Sync には時間がかかります。作成の完了を待たずに次のステ
                 "dynamodb:DeleteItem",
                 "dynamodb:Scan"
             ],
-            "Resource": "*"
+            "Resource": [
+                "arn:aws:dynamodb:us-east-1:アカウント番号:table/dynamodbのテーブル名/index/*",
+                "arn:aws:dynamodb:us-east-1:アカウント番号:table/dynamodbのテーブル名"
+            ]
         }
     ]
 }
@@ -297,12 +314,16 @@ def lambda_handler(event, context):
     print("==== success ====")
 ```
 
+- コードソースセクションの下側にあるランタイム設定から`編集`ボタンをクリックし、ランタイムを `Python3.9` に変更します
+
 - 貼り付けられたら、 `Deploy` ボタンをクリックします。
 
-### Step8: Web アプリ用の IAM　ユーザーを作る
+### Step8:
+このサンプルでは IAM User の認証情報をベタ書きしていますが、プロダクション環境であれば、Amazon Cognito でのユーザー認証を実装して下さい。
+
 - [IAM Policy のコンソール](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/policies$customer)にアクセスし、次の内容を json タブに貼り付ける
 
-バケット名は世界で一意な値になります。`バケット名`を Step2 で設定した値で置き換えて下さい。
+また貼り付ける際は、`アカウント番号`と`kendraのインデックスid`, `バケット名`, `dynamodbのテーブル名`を書き換えて下さい
 
 ```
 {
@@ -315,21 +336,19 @@ def lambda_handler(event, context):
                 "kendra:SubmitFeedback",
                 "kendra:GetQuerySuggestions",
                 "kendra:Query",
+                "s3:GetObject",
                 "kendra:DescribeIndex",
-                "dynamodb:Query",
                 "kendra:ListFaqs",
-                "kendra:DescribeDataSource",
+                "dynamodb:Query",
                 "kendra:ListDataSources",
-                "kendra:DescribeFaq",
                 "kendra:DescribeQuerySuggestionsConfig"
             ],
-            "Resource": "*"
-        },
-        {
-            "Sid": "VisualEditor1",
-            "Effect": "Allow",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::バケット名/*"
+            "Resource": [
+                "arn:aws:kendra:us-east-1:アカウント番号:index/kendraのインデックスid",
+                "arn:aws:s3:::バケット名/*",
+                "arn:aws:dynamodb:us-east-1:アカウント番号:table/dynamodbのテーブル名",
+                "arn:aws:dynamodb:us-east-1:アカウント番号:table/dynamodbのテーブル名/index/*"
+            ]
         }
     ]
 }
