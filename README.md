@@ -15,7 +15,7 @@ Kendra Ambiguous Search App は Amazon Kendra であいまい検索を実現す�
 
 ## License Summary
 
-このサンプルコードは、修正されたMITライセンスの下で利用可能になっています。LICENSEファイルを参照してください。
+このサンプルコードは、Amazon Software License 1.0 の下で利用可能になっています。LICENSEファイルを参照してください。
 `exampleData1.ts` および `exampleData2.ts` で提供されるサンプルデータは、Amazon Kendra のクエリ API からのモックレスポンスを表しています。 このモックレスポンスは、https://en.wikipedia.org/ からのデータをマッシュアップし、Amazon Kendra からの API レスポンスのように見えるようにフォーマットしたものです。 2つのファイルで提供されるサンプルデータは、Creative Commons Attribution-ShareAlike License (https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License) の下、以下の場所から取得したものです。
 
     * https://en.wikipedia.org/wiki/Portal:Ancient_Rome 
