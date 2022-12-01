@@ -3,9 +3,12 @@
 Kendra Ambiguous Search App は Amazon Kendra であいまい検索を実現するためのサンプルアプリです。2022/10/19 Kendra では日本語カスタムシノニムが使えません。そこでこのサンプルでは 他のAWS サービスと連携して擬似的にあいまい検索を実現します。
 
 
-## Architecture / 構成図
+## Architecture Overview / 全体の構成図
 ![architecture](synonym/architecture.png)
-![flow](synonym/flow.png)
+
+## Search Flow / 検索の流れ
+![flow](synonym/search_flow.png)
+![flow](synonym/search_bullet_list.png)
 
 ## Preview / 動作イメージ
 ![screenshot](synonym/screenshot.png)
@@ -15,7 +18,7 @@ Kendra Ambiguous Search App は Amazon Kendra であいまい検索を実現す�
 
 ## License Summary
 
-このサンプルコードは、Amazon Software License 1.0 の下で利用可能になっています。LICENSEファイルを参照してください。
+このサンプルコードは、MIT-0 の下で利用可能になっています。LICENSEファイルを参照してください。
 `exampleData1.ts` および `exampleData2.ts` で提供されるサンプルデータは、Amazon Kendra のクエリ API からのモックレスポンスを表しています。 このモックレスポンスは、https://en.wikipedia.org/ からのデータをマッシュアップし、Amazon Kendra からの API レスポンスのように見えるようにフォーマットしたものです。 2つのファイルで提供されるサンプルデータは、Creative Commons Attribution-ShareAlike License (https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License) の下、以下の場所から取得したものです。
 
     * https://en.wikipedia.org/wiki/Portal:Ancient_Rome 
