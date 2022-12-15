@@ -1,17 +1,33 @@
-## My Project
+# Kendra Ambiguous Search App
 
-TODO: Fill this README out!
+Kendra Ambiguous Search App は Amazon Kendra であいまい検索を実現するためのサンプルアプリです。2022/10/19 Kendra では日本語カスタムシノニムが使えません。そこでこのサンプルでは 他のAWS サービスと連携して擬似的にあいまい検索を実現します。
 
-Be sure to:
 
-* Change the title in this README
-* Edit your repository description on GitHub
+## Architecture Overview / 全体の構成図
+![architecture](synonym/architecture.png)
 
-## Security
+## Search Flow / 検索の流れ
+![flow](synonym/search_flow.png)
+![flow](synonym/search_bullet_list.png)
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+## Preview / 動作イメージ
+![screenshot](synonym/screenshot.png)
 
-## License
+## Getting Started
+このアプリの立ち上げ方は [GETTING_STARTED.ja.md](GETTING_STARTED.ja.md) を御覧ください。
 
-This library is licensed under the MIT-0 License. See the LICENSE file.
+## License Summary
 
+このサンプルコードは、MIT-0 の下で利用可能になっています。LICENSEファイルを参照してください。
+`exampleData1.ts` および `exampleData2.ts` で提供されるサンプルデータは、Amazon Kendra のクエリ API からのモックレスポンスを表しています。 このモックレスポンスは、https://en.wikipedia.org/ からのデータをマッシュアップし、Amazon Kendra からの API レスポンスのように見えるようにフォーマットしたものです。 2つのファイルで提供されるサンプルデータは、Creative Commons Attribution-ShareAlike License (https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License) の下、以下の場所から取得したものです。
+
+    * https://en.wikipedia.org/wiki/Portal:Ancient_Rome 
+    * https://en.wikipedia.org/wiki/Battle_of_Mount_Algidus 
+    * https://en.wikipedia.org/wiki/Battle_of_Arausio 
+    * https://en.wikipedia.org/wiki/Cilician_pirates#Rise_of_piracy 
+    * https://en.wikipedia.org/wiki/Culture_of_ancient_Rome 
+
+また、依存する外部ライブラリのライセンスについては `THIRDPARTY.txt` を御覧ください
+
+## セキュリティに関するお問い合わせ
+[CONTRIBUTING](CONTRIBUTING) をご参照下さい。
