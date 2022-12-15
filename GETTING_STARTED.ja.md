@@ -365,9 +365,8 @@ def lambda_handler(event, context):
 | 既存のポリシーを直接アタッチ | synonym-kendra-search-role |
 
 ### Step9: 検索アプリケーションを起動する
-TODO: git clone のurl書き換え
 ```
-git clone ***
+git clone https://github.com/aws-samples/kendra-ambiguous-search-app.git
 ```
 - `Cluod9` のターミナルで次のコマンドを入力し、プログラムファイルをダウンロードします。
 - `/kendra-react-app/src/services/local-dev-credentials-template.json` ファイルの内容を書き換えます。
