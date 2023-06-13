@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.137.0",
+    "@aws-sdk/client-dynamodb": "^3.351.0",
     "@types/lodash": "^4.14.182",
     "@types/lodash.debounce": "^4.0.7",
     "@types/rc-slider": "^9.3.1",
