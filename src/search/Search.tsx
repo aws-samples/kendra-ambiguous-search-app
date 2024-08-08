@@ -190,7 +190,7 @@ export default class Search extends React.Component<SearchProps, SearchState> {
       const dataSources = listDsResponse.SummaryItems || [];
 
       while (listDsResponse?.$response.hasNextPage()) {
-        const nextPage = listDsResponse.$response.nextPage();
+        const nextPage: any = listDsResponse.$response.nextPage();
         if (nextPage) {
           listDsResponse = await nextPage.promise();
           if (listDsResponse?.SummaryItems) {
