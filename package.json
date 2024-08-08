@@ -10,6 +10,7 @@
     "@types/react-dom": "^18.0.6",
     "aws-sdk": "^2.1354.0",
     "bootstrap": "^5.2.0",
+    "fast-xml-parser": "^4.4.1",
     "moment": "^2.29.4",
     "node-sass": "^9.0.0",
     "react-autocomplete": "^1.8.1",
